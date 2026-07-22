@@ -91,7 +91,7 @@ export function parseSearchParams(params: URLSearchParams): SearchParamsState {
   const dates = normalizeDateRange(params.get("check_in"), params.get("check_out"));
 
   let adults = parseCount(params.get("adults"));
-  let children = parseCount(params.get("children"), 15);
+  const children = parseCount(params.get("children"), 15);
   const infants = parseCount(params.get("infants"), 5);
   const pets = parseCount(params.get("pets"), 5);
 
