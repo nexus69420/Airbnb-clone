@@ -15,7 +15,7 @@ const CITY_COORDS: Record<string, { lat: number; lng: number }> = {
   "san francisco": { lat: 37.7749, lng: -122.4194 },
   "los angeles": { lat: 34.0522, lng: -118.2437 },
   paris: { lat: 48.8566, lng: 2.3522 },
-  new york: { lat: 40.7128, lng: -74.006 },
+  "new york": { lat: 40.7128, lng: -74.006 },
   noida: { lat: 28.5355, lng: 77.391 },
   delhi: { lat: 28.6139, lng: 77.209 },
   mumbai: { lat: 19.076, lng: 72.8777 },
