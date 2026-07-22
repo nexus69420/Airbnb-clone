@@ -7,7 +7,6 @@ Production-oriented Airbnb clone for a fullstack hiring evaluation (Next.js + Fa
 | | URL |
 |--|--|
 | **App** | https://airbnb-clone-sand-five.vercel.app |
-| **API** | https://airbnb-clone-api-svrn.onrender.com |
 | **API docs** | https://airbnb-clone-api-svrn.onrender.com/docs |
 
 Demo login: `alex@example.com` / `password123`
