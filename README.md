@@ -2,6 +2,16 @@
 
 Production-oriented Airbnb clone for a fullstack hiring evaluation (Next.js + FastAPI).
 
+### Live demo
+
+| | URL |
+|--|--|
+| **App** | https://airbnb-clone-sand-five.vercel.app |
+| **API** | https://airbnb-clone-api-svrn.onrender.com |
+| **API docs** | https://airbnb-clone-api-svrn.onrender.com/docs |
+
+Demo login: `alex@example.com` / `password123`
+
 - Architecture: [`docs/ARCHITECTURE_AND_PLAN.md`](docs/ARCHITECTURE_AND_PLAN.md)
 - API contract: [`docs/API_CONTRACT.md`](docs/API_CONTRACT.md)
 - Database: [`docs/DATABASE.md`](docs/DATABASE.md)
