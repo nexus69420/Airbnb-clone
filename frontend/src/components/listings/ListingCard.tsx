@@ -1,16 +1,19 @@
 /**
- * Airbnb-style listing card — photo, heart, Guest favourite, price · rating.
+ * Airbnb-style listing card — photo carousel, heart, Guest favourite, price · rating.
  * Links carry search dates/guests so the booking widget prefills.
  */
 
 "use client";
 
 import { Heart } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo } from "react";
 
+import {
+  ListingCardPhotos,
+  listingPhotoUrls,
+} from "@/components/listings/ListingCardPhotos";
 import { ListingCardSkeleton } from "@/components/listings/ListingCardSkeleton";
 import { useWishlistHeart } from "@/hooks/useWishlist";
 import { formatLocation, formatPrice } from "@/utils/format";
@@ -50,30 +53,19 @@ function ListingCardInner({ listing }: ListingCardProps) {
   return (
     <article className="group relative min-w-0">
       <Link href={href} className="block">
-        <div className="relative aspect-square overflow-hidden rounded-card bg-abnb-surface-hover">
-          {listing.image_url ? (
-            <Image
-              src={listing.image_url}
-              alt={listing.title}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              sizes="(max-width: 768px) 70vw, (max-width: 1200px) 33vw, 16vw"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center text-abnb-muted">No image</div>
-          )}
+        <ListingCardPhotos
+          urls={listingPhotoUrls(listing)}
+          alt={listing.title}
+          aspectClass="aspect-square"
+          roundedClass="rounded-[10px]"
+          sizes="(max-width: 768px) 40vw, (max-width: 1200px) 16vw, 148px"
+          guestFavourite={guestFavourite}
+        />
 
-          {guestFavourite && (
-            <span className="absolute left-3 top-3 rounded-pill bg-abnb-surface px-2.5 py-1 text-xs font-semibold text-abnb-fg shadow-sm">
-              Guest favourite
-            </span>
-          )}
-        </div>
-
-        <div className="mt-2 space-y-0.5">
-          <h3 className="truncate font-semibold text-abnb-fg">{location}</h3>
-          <p className="truncate text-sm text-abnb-muted">{listing.title}</p>
-          <p className="text-sm text-abnb-fg">
+        <div className="mt-1.5 space-y-0.5">
+          <h3 className="truncate text-[15px] font-semibold leading-snug text-abnb-fg">{location}</h3>
+          <p className="truncate text-[13px] text-abnb-muted">{listing.title}</p>
+          <p className="text-[13px] text-abnb-fg">
             <span className="font-semibold">{price}</span>
             <span className="text-abnb-muted"> for 1 night</span>
             {listing.rating != null && (
@@ -91,10 +83,10 @@ function ListingCardInner({ listing }: ListingCardProps) {
           e.stopPropagation();
           onToggle(listing.id);
         }}
-        className="absolute right-3 top-3 rounded-full p-1.5 text-white drop-shadow-md transition hover:scale-110"
+        className="absolute right-2 top-2 z-[3] rounded-full p-1 text-white drop-shadow-md transition hover:scale-110"
       >
         <Heart
-          className={`h-6 w-6 ${wished ? "fill-coral text-coral" : "fill-black/30 stroke-white stroke-2 dark:fill-white/25"}`}
+          className={`h-5 w-5 ${wished ? "fill-coral text-coral" : "fill-black/30 stroke-white stroke-2 dark:fill-white/25"}`}
         />
       </button>
     </article>

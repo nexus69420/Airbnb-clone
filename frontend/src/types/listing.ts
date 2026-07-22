@@ -21,8 +21,12 @@ export interface ListingCard {
   price_per_night: number;
   property_type: PropertyType;
   image_url: string | null;
+  /** All photo URLs for card carousel (falls back to image_url). */
+  image_urls?: string[];
   rating: number | null;
   review_count: number;
+  lat?: number | null;
+  lng?: number | null;
 }
 
 export type ListingListResponse = PaginatedResponse<ListingCard>;

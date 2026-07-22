@@ -1,19 +1,21 @@
 /**
- * Home — Airbnb India style: carousel rows by city, or filtered grid.
+ * Home — Airbnb India style: carousel rows by city, or filtered grid / map split.
  */
 
 "use client";
 
 import { SlidersHorizontal } from "lucide-react";
 import { Suspense, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { ListingCarouselRow } from "@/components/listings/ListingCarouselRow";
 import { ListingGrid } from "@/components/listings/ListingGrid";
+import { SearchMapSplit } from "@/components/listings/SearchMapSplit";
 import { CategoryRow } from "@/components/search/CategoryRow";
 import { FiltersModal } from "@/components/search/FiltersModal";
 import { useListings } from "@/hooks/useListings";
 import { useSearchFilters } from "@/hooks/useSearchFilters";
-import { countActiveFilters } from "@/utils/search-params";
+import { countActiveFilters, toListingsApiParams } from "@/utils/search-params";
 
 const CITY_ROWS = [
   { city: "Tokyo", title: "Popular homes in Tokyo" },
@@ -38,6 +40,13 @@ function hasActiveSearch(filters: ReturnType<typeof useSearchFilters>["filters"]
   );
 }
 
+function seeAllHref(city?: string) {
+  const q = new URLSearchParams();
+  if (city) q.set("location", city);
+  q.set("map", "1");
+  return `/?${q.toString()}`;
+}
+
 function HomeCarousels() {
   const { data, isLoading, isError, refetch } = useListings({
     page: 1,
@@ -51,8 +60,7 @@ function HomeCarousels() {
       const cityKey = row.city.toLowerCase();
       const listings = items.filter(
         (l) =>
-          l.city.toLowerCase() === cityKey ||
-          (l.state?.toLowerCase() === cityKey),
+          l.city.toLowerCase() === cityKey || l.state?.toLowerCase() === cityKey,
       );
       return { ...row, listings };
     }).filter((r) => r.listings.length > 0);
@@ -60,15 +68,15 @@ function HomeCarousels() {
 
   if (isLoading) {
     return (
-      <div className="space-y-10">
+      <div className="space-y-12">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="space-y-4">
-            <div className="h-7 w-64 animate-pulse rounded bg-abnb-surface-hover" />
+          <div key={i} className="space-y-3">
+            <div className="h-7 w-72 animate-pulse rounded bg-abnb-surface-hover" />
             <div className="flex gap-4 overflow-hidden">
-              {Array.from({ length: 5 }).map((__, j) => (
+              {Array.from({ length: 7 }).map((__, j) => (
                 <div
                   key={j}
-                  className="aspect-square w-[13.5vw] min-w-[140px] shrink-0 animate-pulse rounded-card bg-abnb-surface-hover"
+                  className="aspect-square w-[calc((100%-1rem)/2)] min-w-0 shrink-0 animate-pulse rounded-[12px] bg-abnb-surface-hover sm:w-[calc((100%-2*1rem)/3)] md:w-[calc((100%-4*1rem)/5)] lg:w-[calc((100%-6*1rem)/7)]"
                 />
               ))}
             </div>
@@ -106,47 +114,98 @@ function HomeCarousels() {
   }
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
       {rows.map((row) => (
         <ListingCarouselRow
           key={row.city}
           title={row.title}
-          href={`/?location=${encodeURIComponent(row.city)}`}
+          location={row.city}
+          seeAllHref={seeAllHref(row.city)}
           listings={row.listings}
         />
       ))}
       <ListingCarouselRow
         title="Homes guests love"
-        href="/"
-        listings={data.items.slice(0, 12)}
+        location="featured"
+        seeAllHref={seeAllHref()}
+        listings={data.items.slice(0, 9)}
       />
     </div>
   );
 }
 
-function HomeContent() {
+function MapExplore() {
   const { filters } = useSearchFilters();
-  const [filtersOpen, setFiltersOpen] = useState(false);
-  const activeCount = countActiveFilters(filters);
-  const searching = hasActiveSearch(filters);
+  const base = toListingsApiParams(filters);
+  const { data, isLoading, isError } = useListings(
+    filters.location.trim()
+      ? { ...base, page: 1, page_size: 40 }
+      : { page: 1, page_size: 40, sort: "rating_desc" },
+  );
+
+  const label = filters.location.trim() || "featured stays";
+  const title = filters.location.trim()
+    ? `${data?.total ?? "…"} homes in ${filters.location}`
+    : "Homes guests love";
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center text-sm text-abnb-muted">
+        Loading map view…
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="px-6 py-10 text-center text-sm text-red-600">Could not load listings for the map.</div>
+    );
+  }
 
   return (
-    <main className="mx-auto max-w-[1760px] px-6 py-6 md:px-10">
-      <div className="mb-8 flex items-end justify-between gap-4">
-        <div className="min-w-0 flex-1 overflow-hidden border-b border-abnb-border">
-          <CategoryRow />
-        </div>
-        <button
-          type="button"
-          onClick={() => setFiltersOpen(true)}
-          className="mb-3 flex shrink-0 items-center gap-2 rounded-pill border border-abnb-border px-4 py-2.5 text-sm font-semibold text-abnb-fg hover:border-abnb-fg hover:shadow-sm"
-        >
-          <SlidersHorizontal className="h-4 w-4" />
-          Filters{activeCount > 0 ? ` · ${activeCount}` : ""}
-        </button>
-      </div>
+    <SearchMapSplit
+      title={title}
+      locationLabel={label}
+      listings={data?.items ?? []}
+    />
+  );
+}
 
-      {searching ? (
+function HomeContent() {
+  const { filters } = useSearchFilters();
+  const searchParams = useSearchParams();
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const activeCount = countActiveFilters(filters);
+  const showMap = searchParams.get("map") === "1";
+  const searching = hasActiveSearch(filters) && !showMap;
+
+  return (
+    <main
+      className={
+        showMap
+          ? "w-full"
+          : "mx-auto w-full max-w-[1760px] px-6 py-6 sm:px-10 md:px-16 lg:px-20 xl:px-24"
+      }
+    >
+      {!showMap && (
+        <div className="mb-10 flex items-end justify-between gap-3 md:gap-6">
+          <div className="min-w-0 flex-1 overflow-hidden border-b border-abnb-border">
+            <CategoryRow />
+          </div>
+          <button
+            type="button"
+            onClick={() => setFiltersOpen(true)}
+            className="mb-3 flex shrink-0 items-center gap-2 rounded-pill border border-abnb-border px-4 py-2.5 text-sm font-semibold text-abnb-fg hover:border-abnb-fg hover:shadow-sm"
+          >
+            <SlidersHorizontal className="h-4 w-4" />
+            Filters{activeCount > 0 ? ` · ${activeCount}` : ""}
+          </button>
+        </div>
+      )}
+
+      {showMap ? (
+        <MapExplore />
+      ) : searching ? (
         <>
           <p className="mb-6 text-sm text-abnb-muted">
             {filters.location && (
@@ -176,7 +235,7 @@ export default function HomePage() {
   return (
     <Suspense
       fallback={
-        <main className="mx-auto max-w-[1760px] px-6 py-8 md:px-10">
+        <main className="mx-auto w-full max-w-[1760px] px-6 py-8 sm:px-10 md:px-16 lg:px-20 xl:px-24">
           <div className="h-12 animate-pulse rounded bg-abnb-surface-hover" />
         </main>
       }

@@ -81,7 +81,7 @@ python -m scripts.seed --force
 |--------|-------|
 | Users (4 hosts, 3 guests) | 7 |
 | Categories / amenities | 10 / 15 |
-| Active listings (≥3 photos each) | 40 |
+| Active listings (≥3 photos each) | 55 |
 | Bookings (past completed + future pending/confirmed) | 7 |
 | Reviews | 2 |
 | Wishlists | 5 |

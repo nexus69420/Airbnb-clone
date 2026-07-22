@@ -145,9 +145,13 @@ export function searchParamsToQuery(state: SearchParamsState): URLSearchParams {
   return q;
 }
 
+/** UI-only amenity tags that must not be sent to the listings API. */
+const UI_ONLY_AMENITIES = new Set(["guest-favourite"]);
+
 /** Convert UI search state → API query (prices in cents). */
 export function toListingsApiParams(state: SearchParamsState) {
   const dates = normalizeDateRange(state.check_in, state.check_out);
+  const amenities = state.amenities.filter((slug) => !UI_ONLY_AMENITIES.has(slug));
   return {
     page: state.page,
     page_size: 12,
@@ -158,7 +162,7 @@ export function toListingsApiParams(state: SearchParamsState) {
     max_price: state.max_price != null ? state.max_price * 100 : undefined,
     category: state.category ?? undefined,
     property_type: state.property_type ?? undefined,
-    amenities: state.amenities.length ? state.amenities : undefined,
+    amenities: amenities.length ? amenities : undefined,
     check_in: dates.check_in ?? undefined,
     check_out: dates.check_out ?? undefined,
   };

@@ -1,8 +1,8 @@
 /**
- * Rough city → lat/lng for host listing forms (demo geocode, no external API).
+ * Rough city → lat/lng for host listing forms and map pins (demo geocode).
  */
 
-const CITY_COORDS: Record<string, { lat: number; lng: number }> = {
+export const CITY_COORDS: Record<string, { lat: number; lng: number }> = {
   bali: { lat: -8.4095, lng: 115.1889 },
   ubud: { lat: -8.5069, lng: 115.2625 },
   canggu: { lat: -8.6478, lng: 115.1385 },
@@ -38,4 +38,20 @@ export function resolveListingCoords(
   const hit = CITY_COORDS[key];
   if (hit) return hit;
   return { lat: lat ?? null, lng: lng ?? null };
+}
+
+/** Map pin with light jitter so same-city cards don’t stack. */
+export function listingMapPin(
+  listing: { city: string; lat?: number | null; lng?: number | null; id: number },
+  index: number,
+): { lat: number; lng: number } | null {
+  const base = resolveListingCoords(listing.city, listing.lat, listing.lng);
+  if (base.lat == null || base.lng == null) return null;
+  const hasExact = listing.lat != null && listing.lng != null;
+  if (hasExact) return { lat: base.lat, lng: base.lng };
+  const j = 0.012 + (listing.id % 7) * 0.002;
+  return {
+    lat: base.lat + Math.sin(index * 2.3 + listing.id) * j,
+    lng: base.lng + Math.cos(index * 1.7 + listing.id) * j,
+  };
 }

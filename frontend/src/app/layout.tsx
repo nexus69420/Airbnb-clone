@@ -3,7 +3,7 @@
  */
 
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { DM_Sans, Nunito } from "next/font/google";
 
 import { Navbar } from "@/components/layout/Navbar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -20,6 +20,13 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
+/** Rounded sans close to Airbnb Cereal for the logo wordmark. */
+const nunito = Nunito({
+  variable: "--font-logo",
+  subsets: ["latin"],
+  weight: ["700", "800"],
+});
+
 export const metadata: Metadata = {
   title: "Airbnb Clone",
   description: "Production-quality Airbnb clone for fullstack interview evaluation",
@@ -32,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${dmSans.variable} font-sans antialiased`}>
+      <body className={`${dmSans.variable} ${nunito.variable} font-sans antialiased`}>
         <ThemeProvider>
           <QueryProvider>
             <AuthProvider>

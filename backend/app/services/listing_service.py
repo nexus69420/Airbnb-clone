@@ -106,7 +106,8 @@ class ListingService:
 
   @staticmethod
   def _to_card(listing, avg_rating: float | None, review_count: int) -> ListingCard:
-    image_url = listing.images[0].url if listing.images else None
+    image_urls = [img.url for img in (listing.images or [])]
+    image_url = image_urls[0] if image_urls else None
     rating = round(float(avg_rating), 2) if avg_rating is not None else None
     return ListingCard(
       id=listing.id,
@@ -117,8 +118,11 @@ class ListingService:
       price_per_night=listing.price_per_night,
       property_type=listing.property_type,
       image_url=image_url,
+      image_urls=image_urls,
       rating=rating,
       review_count=review_count,
+      lat=listing.lat,
+      lng=listing.lng,
     )
 
   @staticmethod

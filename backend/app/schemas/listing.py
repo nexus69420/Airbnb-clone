@@ -47,8 +47,11 @@ class ListingCard(BaseModel):
   price_per_night: int = Field(description="Nightly rate in cents")
   property_type: PropertyType
   image_url: str | None
+  image_urls: list[str] = Field(default_factory=list)
   rating: float | None = Field(default=None, description="Average review rating 1–5")
   review_count: int = 0
+  lat: float | None = None
+  lng: float | None = None
 
 
 class ListingDetail(BaseModel):

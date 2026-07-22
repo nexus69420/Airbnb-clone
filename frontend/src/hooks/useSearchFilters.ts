@@ -53,10 +53,12 @@ export function useSearchFilters() {
 
       saveStayDraft(stayDraftFromSearch(next));
       const q = searchParamsToQuery(next);
+      // Preserve map split view when tweaking filters from See all
+      if (searchParams.get("map") === "1") q.set("map", "1");
       const qs = q.toString();
       router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
     },
-    [filters, pathname, router],
+    [filters, pathname, router, searchParams],
   );
 
   const clearFilters = useCallback(() => {
