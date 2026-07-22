@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Airbnb-inspired design tokens.
+  Why: one source of truth for light/dark chrome so components stay consistent.
+*/
+
+:root {
+  color-scheme: light;
+  --abnb-coral: #ff385c;
+  --abnb-coral-hover: #d90b3e;
+  --abnb-bg: #ffffff;
+  --abnb-fg: #222222;
+  --abnb-muted: #6a6a6a;
+  --abnb-border: #dddddd;
+  --abnb-surface: #ffffff;
+  --abnb-surface-hover: #f7f7f7;
+  --abnb-elevated-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --abnb-radius-card: 12px;
+  --abnb-radius-pill: 40px;
+  --background: var(--abnb-bg);
+  --foreground: var(--abnb-fg);
+}
+
+.dark {
+  color-scheme: dark;
+  --abnb-bg: #000000;
+  --abnb-fg: #f7f7f7;
+  --abnb-muted: #b0b0b0;
+  --abnb-border: #333333;
+  --abnb-surface: #222222;
+  --abnb-surface-hover: #2a2a2a;
+  --abnb-elevated-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.35);
+  --background: var(--abnb-bg);
+  --foreground: var(--abnb-fg);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--abnb-fg);
+  background: var(--abnb-bg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hide scrollbars on horizontal carousels while keeping scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

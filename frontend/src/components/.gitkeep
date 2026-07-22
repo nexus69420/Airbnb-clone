@@ -1,0 +1,4 @@
+/**
+ * Domain UI components (listings, booking, host, etc.).
+ * Keep each folder single-purpose; no God components.
+ */
