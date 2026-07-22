@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 
 import { Navbar } from "@/components/layout/Navbar";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ToastProvider } from "@/components/system/ToastProvider";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
@@ -35,8 +36,11 @@ export default function RootLayout({
         <ThemeProvider>
           <QueryProvider>
             <AuthProvider>
-              <Navbar />
-              {children}
+              <div className="flex min-h-screen flex-col">
+                <Navbar />
+                <div className="flex-1">{children}</div>
+                <SiteFooter />
+              </div>
               <ToastProvider />
             </AuthProvider>
           </QueryProvider>
