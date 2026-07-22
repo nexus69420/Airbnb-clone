@@ -238,7 +238,7 @@ LISTINGS = [
     "amenity_slugs": ["wifi", "kitchen", "fireplace", "free-parking", "hot-tub"],
     "images": [
       "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1200",
-      "https://images.unsplash.com/photo-1518780664697-55e3ad9be603?w=1200",
+      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200",
     ],
   },
   {
@@ -285,7 +285,7 @@ LISTINGS = [
     "bathrooms": 1,
     "amenity_slugs": ["wifi", "kitchen", "free-parking", "fireplace", "patio"],
     "images": [
-      "https://images.unsplash.com/photo-1518780664697-55e3ad9be603?w=1200",
+      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200",
       "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1200",
     ],
   },
@@ -357,7 +357,7 @@ LISTINGS = [
     "bathrooms": 2,
     "amenity_slugs": ["wifi", "kitchen", "pool", "patio", "air-conditioning"],
     "images": [
-      "https://images.unsplash.com/photo-1570077186670-7d2c0c0c0c0c?w=1200",
+      "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=1200",
       "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200",
     ],
   },
@@ -406,7 +406,7 @@ LISTINGS = [
     "amenity_slugs": ["wifi", "kitchen", "free-parking", "patio"],
     "images": [
       "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1200",
-      "https://images.unsplash.com/photo-1518780664697-55e3ad9be603?w=1200",
+      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200",
     ],
   },
   {
@@ -651,8 +651,9 @@ LISTINGS += [
     "bathrooms": 4,
     "amenity_slugs": ["wifi", "kitchen", "pool", "hot-tub", "free-parking", "bbq-grill", "beach-access"],
     "images": [
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d36b3d?w=1200",
+      "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200",
       "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200",
+      "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1200",
     ],
   },
   {
@@ -749,7 +750,7 @@ LISTINGS += [
     "amenity_slugs": ["wifi", "kitchen", "washer", "dryer", "fireplace", "patio", "free-parking"],
     "images": [
       "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200",
-      "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200",
+      "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=1200",
     ],
   },
   {
@@ -796,8 +797,9 @@ LISTINGS += [
     "bathrooms": 1,
     "amenity_slugs": ["wifi", "kitchen", "washer", "tv"],
     "images": [
-      "https://images.unsplash.com/photo-1533929736458-ca588d08c8cd?w=1200",
+      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200",
       "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200",
     ],
   },
   {
@@ -820,8 +822,9 @@ LISTINGS += [
     "bathrooms": 2,
     "amenity_slugs": ["wifi", "kitchen", "fireplace", "free-parking", "washer", "patio"],
     "images": [
-      "https://images.unsplash.com/photo-1605276374104-dee2c83ff4c8?w=1200",
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200",
       "https://images.unsplash.com/photo-1600047509358-9dc75507daeb?w=1200",
+      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200",
     ],
   },
   # --- Rome ---
@@ -1038,8 +1041,8 @@ LISTINGS += [
     "bathrooms": 1,
     "amenity_slugs": ["wifi", "kitchen", "fireplace", "free-parking", "patio"],
     "images": [
-      "https://images.unsplash.com/photo-1449844908441-882987f99fa1?w=1200",
-      "https://images.unsplash.com/photo-1518780664697-55e3abf8446b?w=1200",
+      "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1200",
+      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200",
     ],
   },
   {
